@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite parallel="none" name="Failed suite [Suite]" guice-stage="DEVELOPMENT">
+  <parameter name="browser" value="Chrome"/>
+  <test name="Test">
+    <parameter name="browser" value="Chrome"/>
+    <classes>
+      <class name="testcasae.TC002_CheckData"/>
+    </classes>
+  </test> <!-- Test -->
+  <test parallel="none" name="Test(failed)">
+    <parameter name="browser" value="Chrome"/>
+    <classes>
+      <class name="testcasae.TC002_CheckData">
+        <methods>
+          <include name="getFunctionName"/>
+          <include name="launchApplication"/>
+          <include name="porFolioPageTest"/>
+          <include name="extentFileCreation"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- testcasae.TC002_CheckData -->
+    </classes>
+  </test> <!-- Test(failed) -->
+</suite> <!-- Failed suite [Suite] -->
