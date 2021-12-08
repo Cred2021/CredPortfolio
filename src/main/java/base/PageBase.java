@@ -1,5 +1,6 @@
 package base;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.JavascriptExecutor;
@@ -34,6 +35,13 @@ public class PageBase {
 	protected Boolean waitForElementToAppearBoolean(WebElement element) {
        return  wait.until(ExpectedConditions.visibilityOf(element))!=null;
     }
+	
+	
+	
+	protected Boolean waitForElementsToAppearBoolean(List <WebElement> element) {
+	       return  wait.until(ExpectedConditions.visibilityOfAllElements(element))!=null;
+	    }
+	
 	
 	
 	@SuppressWarnings("deprecation")

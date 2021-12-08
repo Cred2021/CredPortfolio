@@ -1,5 +1,7 @@
 package pages;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -34,7 +36,22 @@ public class PortFolioPage extends PageBase {
 	public static WebElement eloan;
 	public static String loanNumber;
 	
-	//input[@id='searchKeyword']
+	@FindBy(xpath = "//input[@id='searchKeyword']")
+	public WebElement sortingType;
+	
+	@FindBy(xpath = "//button[@id='dropdown_toggle']")
+	public WebElement dataSelection;
+	
+	@FindBy(xpath = "//div[@class='dropdown-menu show']//button[2]")
+	public WebElement clickonMonth;
+	
+	@FindBy(xpath = "//div[@class='year-month-wrapper']//div[@class='year-month']//div")
+	public List<WebElement> monthPicker;
+	
+	
+	
+	@FindBy(xpath = "//input[@id='all']")
+	public WebElement selectAll;
 	
 	
 	
@@ -93,6 +110,32 @@ public class PortFolioPage extends PageBase {
 	}
 	
 	
+	public void sortLoans(String value) {
+		TestUtil.selectItemByVisibleText(sortingType, value);
+		
+	}
+	
+	public void selectMonth(String month) {
+		dataSelection.click();
+		clickonMonth.click();
+		int count = monthPicker.size();
+		
+		for(int i = 0;i<=count;i++) {
+			if(monthPicker.get(i).getText().contains(month)) {
+				monthPicker.get(i).click();
+				break;
+				
+			}
+		}
+		
+	}
+	
+	public void selectMultipleLoans(String loan) {
+		
+		searchType.sendKeys(loan,Keys.ENTER);
+		selectAll.click();
+		
+	}
 	
 	
 }

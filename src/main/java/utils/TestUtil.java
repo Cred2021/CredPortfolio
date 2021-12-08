@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 import org.apache.commons.io.FileUtils;
@@ -42,6 +43,7 @@ public class TestUtil extends TestBase{
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy-hh-mm-ss");
 		String time = dateFormat.format(now);
 		return time.replace("-", "");
+		
 	}
 	
 	
@@ -137,6 +139,21 @@ public class TestUtil extends TestBase{
 	}
 	
 	
+	public static void selectBYList(List <WebElement> el, String Name) {
+		
+		
+		
+		int size = el.size();
+		for(int i =0; i<=size; i++) {
+			if(el.get(i).getText().equalsIgnoreCase(Name)) {
+				el.get(i).click();
+				break;
+			}
+		}
+		
+		
+	
+	}
 	
 	
 	public static String removeDayandDate(String datexpath) {
@@ -163,5 +180,6 @@ public class TestUtil extends TestBase{
 	}
 	
 	
+
 }
 	
