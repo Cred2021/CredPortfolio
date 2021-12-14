@@ -53,7 +53,8 @@ public class PortFolioPage extends PageBase {
 	@FindBy(xpath = "//input[@id='all']")
 	public WebElement selectAll;
 	
-	
+	@FindBy(xpath = "//ul[@class='list-unstyled nav flex-column']//li")
+	public List <WebElement> MunuBarList;
 	
 	
 
@@ -136,6 +137,27 @@ public class PortFolioPage extends PageBase {
 		selectAll.click();
 		
 	}
+	
+	
+	public void selectMenu(String Menu ) {
+		
+		int count  = MunuBarList.size();
+		
+		for(int i = 1; i<=count;i++) {
+			WebElement dynamicel = pbDriver.findElement(By.xpath("//ul[@class='list-unstyled nav flex-column']//div/span//li["+i+"]//a//span"));
+			System.out.println(dynamicel.getText());
+			if(dynamicel.getText().equalsIgnoreCase(Menu)) {
+				jsExecutorClickOn(dynamicel);
+				//dynamicel.click();
+				break;
+			}
+		}
+		
+		//TestUtil.selectBYList(MunuBarList, Menu);
+		}
+	
+
+	
 	
 	
 }

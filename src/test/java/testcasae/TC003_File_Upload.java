@@ -6,16 +6,17 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import base.TestBase;
 import pages.LoginPage;
+import pages.NoticePage;
 import pages.PortFolioPage;
 import pages.loanApplicantPage;
 import utils.ExcelLibraries;
 
 
-public class TC001_Login_Cred extends TestBase{
+public class TC003_File_Upload extends TestBase{
 	
 	LoginPage objLogin;
 	PortFolioPage objPort;
-	loanApplicantPage objappli;
+NoticePage objNotice;
 	
 	@Test(priority = 1)
 	public void loginTest() throws Throwable   {
@@ -49,48 +50,13 @@ public class TC001_Login_Cred extends TestBase{
 			reporting("Portfolio Validation", "Table should be loaded", "Table loaded unsuccessfully", "Fail");
 		}
 		
-		try {
-			Assert.assertEquals(true, objPort.searchLoan(ExcelLibraries.getTestColValue("loan")));
-			reporting("Loan Search Validation", "Loan  should be show", "Loan shows successfully", "Pass");
-		}catch(Exception e) {
-			reporting("Loan Search Validation", "Loan should be show", "loan shows unsuccessfully", "Fail");
-		}
-		Thread.sleep(10000);
+		objPort.selectMenu("Notice Drafts");
 		
-		objappli = new loanApplicantPage(driver);
-		Assert.assertEquals(true, objappli.validationONLoan());
+		objNotice = new NoticePage(driver);
 		
-		
-		try{
-			checkFun = objappli.editLoan(ExcelLibraries.getTestColValue("applicant_email"), ExcelLibraries.getTestColValue("applicant_contact"), ExcelLibraries.getTestColValue("tabName"));
-			
-			if(checkFun) {
-				reporting("Loan edit Validation", "Loan Should be edit Successfully", "Loan Edit Successfully", "Pass");
-			}else {
-				reporting("Loan edit Validation", "Loan Should be edit Successfully", "Loan Edit Un-Successfully", "Fail");
-			}
-			
-			
-		}catch(Exception e) {
-			reporting("Loan edit Validation", "Loan Should be edit Successfully", "ERROR While Editing", "Fail");
-		}
-		
+		objNotice.setNoticeType("Auto_Test11");
+		objNotice.uploadDraft();
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	public void etoe() {
-		//login
-		//potyfolio
-		//notive
-	}
-	
-	
-	
 
 }

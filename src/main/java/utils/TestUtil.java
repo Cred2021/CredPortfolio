@@ -1,6 +1,11 @@
 package utils;
 
 import java.io.File;
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -12,10 +17,12 @@ import java.util.Scanner;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
+import base.PageBase;
 import base.TestBase;
 
 
@@ -26,6 +33,7 @@ public class TestUtil extends TestBase{
 	public static String[][] reportLog;
 	static Date date;
 	Calendar calendar;
+	public static Robot robj ;
 
 	
 	
@@ -145,8 +153,10 @@ public class TestUtil extends TestBase{
 		
 		int size = el.size();
 		for(int i =0; i<=size; i++) {
+			System.out.println(el.get(i).getText());
 			if(el.get(i).getText().equalsIgnoreCase(Name)) {
-				el.get(i).click();
+			PageBase.clickOnElement(el.get(i));
+				
 				break;
 			}
 		}
@@ -179,6 +189,44 @@ public class TestUtil extends TestBase{
 		
 	}
 	
+	
+	public static void uploadFile(String filename) throws AWTException {
+		robj = new Robot();
+		//String fileName = System.getProperty("user.dir")+"/src/main/java/config/testing notice 2.docx";
+		File file = new File(filename);
+		StringSelection StringSelection = new StringSelection(file.getAbsolutePath());
+	    Toolkit.getDefaultToolkit().getSystemClipboard().setContents(StringSelection, null);
+
+	    driver.switchTo().window(driver.getWindowHandle());
+
+	   
+
+	    //Open Goto window
+	    robj.keyPress(KeyEvent.VK_META);
+	    robj.keyPress(KeyEvent.VK_SHIFT);
+	    robj.keyPress(KeyEvent.VK_G);
+	    robj.keyRelease(KeyEvent.VK_META);
+	    robj.keyRelease(KeyEvent.VK_SHIFT);
+	    robj.keyRelease(KeyEvent.VK_G);
+
+	    //Paste the clipboard value
+	    robj.keyPress(KeyEvent.VK_META);
+	    robj.keyPress(KeyEvent.VK_V);
+	    robj.keyRelease(KeyEvent.VK_META);
+	    robj.keyRelease(KeyEvent.VK_V);
+
+	    //Press Enter key to close the Goto window and Upload window
+	    robj.delay(1000);
+	    robj.keyPress(KeyEvent.VK_ENTER);
+	    robj.keyRelease(KeyEvent.VK_ENTER);
+	    robj.delay(1000);
+	    robj.keyPress(KeyEvent.VK_ENTER);
+	    robj.keyRelease(KeyEvent.VK_ENTER);
+		
+		
+		
+		
+	}
 	
 
 }

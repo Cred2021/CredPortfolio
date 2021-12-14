@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -58,7 +59,7 @@ public class PageBase {
 			Actions actions = new Actions(pbDriver); 
 			   actions.moveToElement(element); 
 		}
-		public void jsExecutorClickOn(WebElement element){
+		public static void jsExecutorClickOn(WebElement element){
 	        ((JavascriptExecutor) pbDriver).executeScript("arguments[0].click();",element);
 	    }
 		
@@ -79,6 +80,20 @@ public class PageBase {
 		public void sendKeysINTByJS( WebElement element, int attributeValue){
 		    JavascriptExecutor js = ((JavascriptExecutor) pbDriver);
 		    js.executeScript("arguments[0].setAttribute('value','"+attributeValue+"');", element);
+		}
+		
+		
+		public static void clickOnElement(WebElement el) {
+			Point point = el.getLocation();
+			int xcord = point.getX();
+			
+			int ycord = point.getY();
+			int width = el.getSize().getWidth();
+	
+			                Actions action = new Actions(pbDriver);
+			                action.moveToElement(el).build().perform();
+			            
+			                action.moveToElement(el).moveByOffset((width/2)-2, 0).click().perform();
 		}
 		
 }
