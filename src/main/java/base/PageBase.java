@@ -1,5 +1,6 @@
 package base;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.JavascriptExecutor;
@@ -12,6 +13,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class PageBase {
+	public static int Flag=0;
 	protected static WebDriver pbDriver;
 	private WebDriverWait wait;
 	private static final int iTimeOut = 20; //seconds
@@ -72,5 +74,9 @@ public class PageBase {
 		    JavascriptExecutor js = ((JavascriptExecutor) pbDriver);
 		    js.executeScript("arguments[0].setAttribute('value','"+attributeValue+"');", element);
 		}
+		
+		protected Boolean waitForElementsToAppearBoolean(List <WebElement> element) {
+		    return wait.until(ExpectedConditions.visibilityOfAllElements(element))!=null;
+		  }
 		
 }

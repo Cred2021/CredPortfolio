@@ -1,5 +1,10 @@
 package utils;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -26,7 +31,7 @@ public class TestUtil extends TestBase{
 	static Date date;
 	Calendar calendar;
 
-	
+	public static Robot robj;
 	
 	public static String getCurrentDate()
 	{
@@ -159,6 +164,44 @@ public class TestUtil extends TestBase{
 		datexpath =	datexpath.trim();
 		System.out.println(datexpath);
 		return datexpath;
+		
+	}
+	
+	public static void uploadFile(String fileName) throws AWTException {
+		robj = new Robot();
+		//String fileName = System.getProperty("user.dir")+"/src/main/java/config/universal_Notice.docx";
+		File file = new File(fileName);
+		StringSelection StringSelection = new StringSelection(file.getAbsolutePath());
+	    Toolkit.getDefaultToolkit().getSystemClipboard().setContents(StringSelection, null);
+
+	    driver.switchTo().window(driver.getWindowHandle());
+
+	   
+
+	    //Open Goto window
+	    robj.keyPress(KeyEvent.VK_META);
+	    robj.keyPress(KeyEvent.VK_SHIFT);
+	    robj.keyPress(KeyEvent.VK_G);
+	    robj.keyRelease(KeyEvent.VK_META);
+	    robj.keyRelease(KeyEvent.VK_SHIFT);
+	    robj.keyRelease(KeyEvent.VK_G);
+
+	    //Paste the clipboard value
+	    robj.keyPress(KeyEvent.VK_META);
+	    robj.keyPress(KeyEvent.VK_V);
+	    robj.keyRelease(KeyEvent.VK_META);
+	    robj.keyRelease(KeyEvent.VK_V);
+
+	    //Press Enter key to close the Goto window and Upload window
+	    robj.delay(1000);
+	    robj.keyPress(KeyEvent.VK_ENTER);
+	    robj.keyRelease(KeyEvent.VK_ENTER);
+	    robj.delay(1000);
+	    robj.keyPress(KeyEvent.VK_ENTER);
+	    robj.keyRelease(KeyEvent.VK_ENTER);
+		
+		
+		
 		
 	}
 	

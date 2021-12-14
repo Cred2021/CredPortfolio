@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 import base.TestBase;
 import pages.DataUploadpage;
 import pages.LoginPage;
+import pages.NoticeDraftPage;
 import pages.PortFolioPage;
 import pages.loanApplicantPage;
 import utils.ExcelLibraries;
@@ -17,8 +18,7 @@ public class TC002_CheckData  extends TestBase{
 
 	LoginPage objLogin;
 	PortFolioPage objPort;
-	DataUploadpage objappli;
-	
+	NoticeDraftPage objNdp;
 	@Test(priority = 1)
 	public void loginTest() throws Throwable   {
 	
@@ -27,7 +27,7 @@ public class TC002_CheckData  extends TestBase{
 		
 		objLogin.loginActivity(ExcelLibraries.getTestColValue("UserName"), ExcelLibraries.getTestColValue("Password"));
 		
-		Assert.assertNotEquals(objLogin.verifyforWrongPassword(), true);
+		//Assert.assertNotEquals(objLogin.verifyforWrongPassword(), true);
 		
 		reporting("Login-OTP Validation", "User should be able to get OTP", "User Successfully navigate to OTP Page", "Pass");
 		
@@ -51,20 +51,9 @@ public class TC002_CheckData  extends TestBase{
 			reporting("Portfolio Validation", "Table should be loaded", "Table loaded unsuccessfully", "Fail");
 		}
 		
-		try {
-			AssertJUnit.assertEquals(true, objPort.searchLoan(ExcelLibraries.getTestColValue("loan")));
-			reporting("Loan Search Validation", "Loan  should be show", "Loan shows successfully", "Pass");
-		}catch(Exception e) {
-			reporting("Loan Search Validation", "Loan should be show", "loan shows unsuccessfully", "Fail");
-		}
-		Thread.sleep(10000);
-		
-	
-		objappli = new DataUploadpage(driver);
-		
-		objappli.validateData("Loan Details");
-		objappli.validateData("Applicant Details");
-		
+		objNdp = new NoticeDraftPage(driver);
+		objNdp.setNoticeType("Autotest10");
+		objNdp.uploadDraft();
 		
 	}
 

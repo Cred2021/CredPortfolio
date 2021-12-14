@@ -1,5 +1,7 @@
 package pages;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -7,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import base.PageBase;
+import utils.ExcelLibraries;
 import utils.TestUtil;
 
 public class PortFolioPage extends PageBase {
@@ -16,6 +19,9 @@ public class PortFolioPage extends PageBase {
 	
 	@FindBy(css = "#searchKeyword")
 	public WebElement searchEnter;
+	
+	@FindBy(xpath = "//a[contains(text(),'Applicant Details')]")
+	public WebElement applicantDetails;
 	
 	
 	@FindBy(xpath = "//table[@class='capitalize admin_portfolio_table table']//tbody//tr[1]//td[1]//a//span[1]")
@@ -31,10 +37,23 @@ public class PortFolioPage extends PageBase {
 	@FindBy(xpath = "//input[@id='searchKeyword']")
 	public WebElement searchType;
 	
+	@FindBy(xpath = "//div[@class='tab-pane active']//div//div//div//div//table//tbody//tr")
+	public List <WebElement> DetailsTable;
+	
+	@FindBy(xpath = "//div[@class='tab-pane active']//div//div//div//div//table//tbody//tr//th")
+	public List <WebElement> leftDetailsTable;
+	
+	@FindBy(xpath = "//div[@class='tab-pane active']//div//div//div//div//table//tbody//tr//td")
+	public List <WebElement> rightDetailsTable;
+	
+	
 	public static WebElement eloan;
 	public static String loanNumber;
 	
 	//input[@id='searchKeyword']
+	
+	@FindBy(xpath = "//ul[@class='list-unstyled nav flex-column']//li")
+	public List <WebElement> MunuBarList;
 	
 	
 	
@@ -90,6 +109,46 @@ public class PortFolioPage extends PageBase {
 		else {
 			return false;
 		}
+	}
+	
+	public void selectMenu(String Menu ) {
+		
+		int count=MunuBarList.size();
+		for(int i=0; i<count; i++)
+		{
+			if(MunuBarList.get(i).getText().contains(Menu)) {
+				
+				MunuBarList.get(i).click();
+				break;
+			}
+		}
+	}
+	
+	public void fetchLoanDetailsforPtPage() throws Throwable {
+		
+		String [] LoanDetailsValueOnPtPage= {"Loan Id","Loan Type","Toatal Loan Amount", "Name","Contact Number","Email"};
+		
+		int Count = DetailsTable.size();
+		int arrSize=0;
+		
+		for(int i=0; i<Count; i++) {
+			
+			if(Flag==3) {
+				applicantDetails.click();
+				i=0;
+			}
+			
+			if(leftDetailsTable.get(i).getText().contains(LoanDetailsValueOnPtPage[arrSize])) {
+				rightDetailsTable.get(i).getText();
+				Flag++;
+				arrSize++;
+				ExcelLibraries.setExcelOutput(leftDetailsTable.get(i).getText(), rightDetailsTable.get(i).getText());
+			}
+			
+		}
+		
+		
+		
 	}
 	
 	
