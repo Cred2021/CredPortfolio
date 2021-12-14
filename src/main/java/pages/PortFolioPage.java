@@ -50,12 +50,28 @@ public class PortFolioPage extends PageBase {
 	public static WebElement eloan;
 	public static String loanNumber;
 	
-	//input[@id='searchKeyword']
+	@FindBy(xpath = "//input[@id='searchKeyword']")
+	public WebElement sortingType;
+	
+	@FindBy(xpath = "//button[@id='dropdown_toggle']")
+	public WebElement dataSelection;
+	
+	@FindBy(xpath = "//div[@class='dropdown-menu show']//button[2]")
+	public WebElement clickonMonth;
+	
+	@FindBy(xpath = "//div[@class='year-month-wrapper']//div[@class='year-month']//div")
+	public List<WebElement> monthPicker;
 	
 	@FindBy(xpath = "//ul[@class='list-unstyled nav flex-column']//li")
 	public List <WebElement> MunuBarList;
 	
 	
+	
+	@FindBy(xpath = "//input[@id='all']")
+	public WebElement selectAll;
+	
+	@FindBy(xpath = "//ul[@class='list-unstyled nav flex-column']//li")
+	public List <WebElement> MunuBarList;
 	
 	
 
@@ -151,6 +167,53 @@ public class PortFolioPage extends PageBase {
 		
 	}
 	
+	
+	public void sortLoans(String value) {
+		TestUtil.selectItemByVisibleText(sortingType, value);
+		
+	}
+	
+	public void selectMonth(String month) {
+		dataSelection.click();
+		clickonMonth.click();
+		int count = monthPicker.size();
+		
+		for(int i = 0;i<=count;i++) {
+			if(monthPicker.get(i).getText().contains(month)) {
+				monthPicker.get(i).click();
+				break;
+				
+			}
+		}
+		
+	}
+	
+	public void selectMultipleLoans(String loan) {
+		
+		searchType.sendKeys(loan,Keys.ENTER);
+		selectAll.click();
+		
+	}
+	
+	
+	public void selectMenu(String Menu ) {
+		
+		int count  = MunuBarList.size();
+		
+		for(int i = 1; i<=count;i++) {
+			WebElement dynamicel = pbDriver.findElement(By.xpath("//ul[@class='list-unstyled nav flex-column']//div/span//li["+i+"]//a//span"));
+			System.out.println(dynamicel.getText());
+			if(dynamicel.getText().equalsIgnoreCase(Menu)) {
+				jsExecutorClickOn(dynamicel);
+				//dynamicel.click();
+				break;
+			}
+		}
+		
+		//TestUtil.selectBYList(MunuBarList, Menu);
+		}
+	
+
 	
 	
 	

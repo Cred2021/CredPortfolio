@@ -77,5 +77,20 @@ public class TC001_Login_Cred extends TestBase{
 		
 		
 	}
+	
+	
+	
+	
+	
+	
+	
+	public void etoe() {
+		//login
+		//potyfolio
+		//notive
+	}
+	
+	
+	
 
 }

@@ -31,6 +31,8 @@ public class DataUploadpage extends PageBase {
 	public WebElement applicantDetailsTap;
 	
 	
+	
+	
 	//div[@class='tab-pane active']//div//div//div//div//table//tbody//tr
 	
 	public DataUploadpage(WebDriver driver) {

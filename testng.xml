@@ -7,7 +7,7 @@
   
   <parameter name="browser" value ="Chrome"></parameter>
     <classes>
-      <class name="testcasae.TC001_Login_Cred"/>
+      <class name="testcasae.TC003_File_Upload"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->
