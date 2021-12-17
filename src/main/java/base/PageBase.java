@@ -1,5 +1,6 @@
 package base;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -44,9 +45,9 @@ public class PageBase {
 	
 	
 	
-	@SuppressWarnings("deprecation")
+	
 	public void waitDriver() throws Throwable {
-		pbDriver.manage().timeouts().implicitlyWait(3,TimeUnit.SECONDS);
+		pbDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
 		Thread.sleep(3000);
 	}
 	
