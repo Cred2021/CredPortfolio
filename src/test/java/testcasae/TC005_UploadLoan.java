@@ -1,31 +1,31 @@
 package testcasae;
 
-
-
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
 import base.TestBase;
+import pages.DataUploadpage;
 import pages.LoginPage;
-import pages.NoticePage;
 import pages.PortFolioPage;
 import pages.loanApplicantPage;
 import utils.ExcelLibraries;
-import utils.TestUtil;
 
-
-public class TC003_File_Upload extends TestBase{
+public class TC005_UploadLoan extends TestBase {
+	
 	
 	LoginPage objLogin;
 	PortFolioPage objPort;
-NoticePage objNotice;
+	DataUploadpage objappli;
 	
 	@Test(priority = 1)
 	public void loginTest() throws Throwable   {
 	
 	
+		
 		objLogin = new LoginPage(driver);
 		
 		objLogin.loginActivity(ExcelLibraries.getTestColValue("UserName"), ExcelLibraries.getTestColValue("Password"));
+	
 		
 		//Assert.assertNotEquals(objLogin.verifyforWrongPassword(), true);
 		
@@ -35,6 +35,7 @@ NoticePage objNotice;
 		
 		Assert.assertTrue(objLogin.verifyUsernameDispalyed());
 		
+		
 		reporting("Login Validation", "User should be able to login", "User Successfully Loggedin", "Pass");
 		
 	
@@ -43,6 +44,7 @@ NoticePage objNotice;
 	public void porFolioPageTest() throws Throwable {
 		objPort=new PortFolioPage(driver);
 		objPort.clickOnCompany("Click", "");
+		getNetworklog();
 		Thread.sleep(5000);
 		try {
 			Assert.assertEquals(true, objPort.portfolioActivity());
@@ -51,17 +53,26 @@ NoticePage objNotice;
 			reporting("Portfolio Validation", "Table should be loaded", "Table loaded unsuccessfully", "Fail");
 		}
 		
-		objPort.selectMenu("Notice Drafts");
 		
-		objNotice = new NoticePage(driver);
 		
-		objNotice.noticeDraftCreation("","Auto_Test21"+TestUtil.getTimeStamp());
+		objPort.selectMenu("Data Upload");
+		objappli = new DataUploadpage(driver);
+		objappli.uploadFile();
+		getNetworklog();
 		
+		objPort.selectMenu("Portfolio");
+		
+		Thread.sleep(4000);
+		System.out.println(ExcelLibraries.getDataUploadColValue("loan_id"));
+		objPort.searchLoan(ExcelLibraries.getDataUploadColValue("loan_id"));
+		
+		Thread.sleep(4000);
 	
-	
+		
+		objappli.validateData("Loan Details");
 		
 		
-		Thread.sleep(10000);
+		
 		
 	}
 

@@ -1,23 +1,20 @@
 package testcasae;
 
-
-
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
 import base.TestBase;
 import pages.LoginPage;
 import pages.NoticePage;
-import pages.PortFolioPage;
-import pages.loanApplicantPage;
+import pages.*;
 import utils.ExcelLibraries;
 import utils.TestUtil;
 
-
-public class TC003_File_Upload extends TestBase{
+public class TC004_CreateAccount extends TestBase {
 	
 	LoginPage objLogin;
 	PortFolioPage objPort;
-NoticePage objNotice;
+	AccountCreationPage objAcc;
 	
 	@Test(priority = 1)
 	public void loginTest() throws Throwable   {
@@ -51,18 +48,18 @@ NoticePage objNotice;
 			reporting("Portfolio Validation", "Table should be loaded", "Table loaded unsuccessfully", "Fail");
 		}
 		
-		objPort.selectMenu("Notice Drafts");
-		
-		objNotice = new NoticePage(driver);
-		
-		objNotice.noticeDraftCreation("","Auto_Test21"+TestUtil.getTimeStamp());
+		objPort.selectMenu("Settings");
 		
 	
+		
+		objAcc = new AccountCreationPage(driver);
+		objAcc.createAcount("Multi", "", "", "", "", "", "");
 	
 		
 		
 		Thread.sleep(10000);
 		
 	}
+
 
 }
